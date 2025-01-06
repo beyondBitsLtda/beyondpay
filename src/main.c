@@ -11,13 +11,11 @@ Faz uso dos arquivos de cabeçalho (.h) do diretório include/ para chamar funç
 #include "input.h"
 #include "output.h"
 
-
-
-
 int main () {
   int escolha; 
   float buget;
-
+  char nome_usuario;
+  
   // Definindo uma estrutura para representar uma data
 
   typedef struct {
@@ -25,9 +23,22 @@ int main () {
     int mes;
     int ano;
   } Data;
-  
 
 
+while (1)
+{
+  printf("Bem - Vindo ao BeyondPay - Sua aplicação para registro de transações\n\n");
+        printf("+--------------------------+\n");
+        printf("|  Registre ou confira suas transações aqui! |\n");
+        printf("+--------------------------+\n");
+        printf("|    1. Registrar transações    |\n");
+        printf("|    2. Ver Transações          |\n");
+        printf("|    3. Sair                    |\n");
+        printf("+--------------------------+\n");
+        printf("Choose an option: ");
+        scanf("%d", &escolha);
+
+}
 
 }
 
