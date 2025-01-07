@@ -9,7 +9,7 @@ Faz uso dos arquivos de cabeçalho (.h) do diretório include/ para chamar funç
 #include <stdio.h>
 #include "finance.h"
 #include "input.h"
-#include "output.h"
+#include "output.h"git 
 
 int main () {
   int escolha; 
@@ -19,12 +19,12 @@ int main () {
   // Definindo uma estrutura para representar uma data.
 
   typedef struct {
-    int dia;
     int mes;
     int ano;
   } Data;
 
 // Adptei a lógica de menu, criando a opção de cadastrar as verbas e transações com base o mês
+// Vericar opção de realizar o Switch ao invés de While.
 while (1)
 {
   printf("Bem - Vindo ao BeyondPay - Sua aplicação para registro de transações\n\n");
@@ -45,9 +45,7 @@ while (1)
           Data data;
 
           // Entrada de dados
-            printf("Digite o dia: ");
-            scanf("%d", &data.dia);
-
+        
             printf("Digite o mes: ");
             scanf("%d", &data.mes);
 
@@ -55,7 +53,7 @@ while (1)
             scanf("%d", &data.ano);
 
             // Saída formatada
-            printf("Data inserida: %02d/%02d/%04d\n", data.dia, data.mes, data.ano);
+            printf("Data inserida: %02d/%04d\n",data.mes, data.ano);
 
             printf("Insira o seu Bugted: ");
             scanf("%f", &verba);
