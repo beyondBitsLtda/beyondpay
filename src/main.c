@@ -13,10 +13,10 @@ Faz uso dos arquivos de cabeçalho (.h) do diretório include/ para chamar funç
 
 int main () {
   int escolha; 
-  float buget;
+  float verba;
   char nome_usuario;
   
-  // Definindo uma estrutura para representar uma data
+  // Definindo uma estrutura para representar uma data.
 
   typedef struct {
     int dia;
@@ -24,19 +24,46 @@ int main () {
     int ano;
   } Data;
 
-
+// Adptei a lógica de menu, criando a opção de cadastrar as verbas e transações com base o mês
 while (1)
 {
   printf("Bem - Vindo ao BeyondPay - Sua aplicação para registro de transações\n\n");
         printf("+--------------------------+\n");
         printf("|  Registre ou confira suas transações aqui! |\n");
         printf("+--------------------------+\n");
-        printf("|    1. Registrar transações    |\n");
-        printf("|    2. Ver Transações          |\n");
-        printf("|    3. Sair                    |\n");
+        printf("|    1. Registrar Verba         |\n");
+        printf("|    2. Registrar transações    |\n");
+        printf("|    3. Ver Transações          |\n");
+        printf("|    4. Sair                    |\n");
         printf("+--------------------------+\n");
-        printf("Choose an option: ");
+        printf("Escolha sua opção: ");
         scanf("%d", &escolha);
+
+        if (escolha == 1)
+        {
+          printf("Insira o mês no  qual deseja registrar a verba: \n");
+          Data data;
+
+          // Entrada de dados
+            printf("Digite o dia: ");
+            scanf("%d", &data.dia);
+
+            printf("Digite o mes: ");
+            scanf("%d", &data.mes);
+
+            printf("Digite o ano: ");
+            scanf("%d", &data.ano);
+
+            // Saída formatada
+            printf("Data inserida: %02d/%02d/%04d\n", data.dia, data.mes, data.ano);
+
+            printf("Insira o seu Bugted: ");
+            scanf("%f", &verba);
+            printf("Verba Registrada: %.2f\n", verba);
+          
+          // Agora tenho que aprender a relacionar as verbas as dastas, pelo oque eu vi é dificil kk
+
+        }
 
 }
 
