@@ -29,9 +29,10 @@ int main () {
     printf("Informe o valor do dinheiro mensal : R$ ");
     scanf("%f", &verba);
 
-// Adptei a lógica de menu, criando a opção de cadastrar as verbas e transações com base o mês
-// Vericar opção de realizar o Switch ao invés de While.
-
+    // *Brayan =  Voltar a lógica do menu anterior , e realizar as validações dentro da opção de cadastrar verba.
+    // *Brayan = Fazer verificação se o usuário não usou outra opção que esteja fora do menu.
+    // *Brayan = Remover dia do typedef.
+    
     //Usando DO pois ele tem ficar em loop para para so sair do menu quando a opção sair for selecionada
     do {
         printf("Bem - Vindo ao BeyondPay - Sua aplicação para registro de transações\n\n");
