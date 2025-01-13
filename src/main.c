@@ -28,6 +28,7 @@ int main () {
     //char nome_usuario;
     //Data data = {0, 0, 0};
     float verba;
+    float transf;
 
     // Solicita o valor total mensal
     //printf("Informe o valor do dinheiro mensal : R$ ");
@@ -89,6 +90,19 @@ int main () {
                     printf("Verba Registrada: %.2f\n", verba);
 
                 break;
+
+            case 2: // Registrar verba. Aqui vamos ter que pensar em como vincular transferência com o mês registrado.
+             printf("Insira o valor de Transação desejado: ");
+             scanf("%f", &transf);
+             printf("Transação Registrada: %.2f\n", transf);
+
+            while (transf <= 0) {
+             printf("O valor prescisa ser maior que 0: ");
+             scanf("%f", &transf);
+             printf("Transação Registrada: %.2f\n", transf);        
+               
+            }
+             break;
 
             case 0:
                 printf("Programa encerrado.\n");
