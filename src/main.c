@@ -8,6 +8,7 @@ Faz uso dos arquivos de cabeçalho (.h) do diretório include/ para chamar funç
 
 #include <stdio.h>
 #define MAX_REGISTROS 100 //define a quantidade max de registros no array
+#define MAX_REGISTROS_TRANSF 100 //define a quantidade max de registros no array
 //#include "finance.h"
 //#include "input.h"
 //#include "output.h"git
@@ -20,15 +21,26 @@ Faz uso dos arquivos de cabeçalho (.h) do diretório include/ para chamar funç
     //float verba;
 } Registro;
 
+// Definindo uma estrutura para representar uma data, mes, ano e valor de transação
+  typedef struct {
+    //int dia;
+    int mes;
+    int ano;
+    float transf;
+    //float verba;
+} Registro_transf;
+
 int main () {
 
     Registro registros[MAX_REGISTROS]; // Array para armazenar registros
+    Registro_transf registros_transf[MAX_REGISTROS_TRANSF]; // Array para armazenar registros
     int totalRegistros = 0; // Contador de registros
+    int totalRegistros_transf = 0; // Contador de registros
     int escolha;
     //char nome_usuario;
     //Data data = {0, 0, 0};
     float verba;
-    float transf;
+    
 
     // Solicita o valor total mensal
     //printf("Informe o valor do dinheiro mensal : R$ ");
@@ -92,17 +104,56 @@ int main () {
                 break;
 
             case 2: // Registrar verba. Aqui vamos ter que pensar em como vincular transferência com o mês registrado.
-             printf("Insira o valor de Transação desejado: ");
-             scanf("%f", &transf);
-             printf("Transação Registrada: %.2f\n", transf);
+             if (totalRegistros_transf < MAX_REGISTROS_TRANSF) {
+                    // Validação do mês
+                    do {
+                        printf("Insira o mês (1-12): ");
+                        scanf("%d", &registros_transf[totalRegistros_transf].mes);
+                        if (registros_transf[totalRegistros_transf].mes < 1 || registros[totalRegistros_transf].mes > 12) {
+                            printf("Mês inválido! O valor deve estar entre 1 e 12.\n");
+                        }
+                    } while (registros_transf[totalRegistros_transf].mes < 1 || registros_transf[totalRegistros_transf].mes > 12);
 
-            while (transf <= 0) {
-             printf("O valor prescisa ser maior que 0: ");
-             scanf("%f", &transf);
-             printf("Transação Registrada: %.2f\n", transf);        
+                    // Validação do ano
+                    do {
+                        printf("Insira o ano (1-9999): ");
+                        scanf("%d", &registros_transf[totalRegistros_transf].ano);
+                        if (registros_transf[totalRegistros_transf].ano < 1 || registros_transf[totalRegistros_transf].ano > 9999) {
+                            printf("Ano inválido! O valor deve estar entre 1 e 9999.\n");
+                        }
+                    } while (registros_transf[totalRegistros_transf].ano < 1 || registros_transf[totalRegistros_transf].ano > 9999);
+
+                    // Incrementar o contador de registros
+                    totalRegistros_transf++;
+
+                    // Mensagem de confirmação
+                    printf("Registro concluído: %02d/%04d\n",
+                           registros[totalRegistros - 1].mes,
+                           registros[totalRegistros - 1].ano); //acessa o índice do último registro adicionado (porque os índices começam em 0).
+                } else {
+                    printf("Limite de registros atingido.\n");
+                }
+                    Registro_transf registro_transferencia_control;
+                     printf("Insira o valor de Transação desejado: ");
+                     scanf("%f", &registro_transferencia_control.transf);
+                     printf("Transação Registrada: %.2f\n", registro_transferencia_control);
+                     while (registro_transferencia_control.transf <= 0) {
+                     printf("O valor prescisa ser maior que 0: ");
+                     scanf("%f", &registro_transferencia_control.transf);
+                     // Exibindo apenas o último registro
+                    int ultimoIndice = 2; // Índice do último elemento (tamanho do array - 1)
+                    printf("Último Registro:\n");
+                    printf("Data: %02d/%d - Valor: R$ %.2f\n"), 
+                    registros_transf[totalRegistros_transf].mes, 
+                    registros_transf[totalRegistros_transf].ano, 
+                    registros_transf[totalRegistros_transf].transf;
+
+                    return 0;        
                
             }
-             break;
+
+                break;
+
 
             case 0:
                 printf("Programa encerrado.\n");
