@@ -11,6 +11,7 @@ typedef struct {
     int mes;
     int ano;
     float transf;
+    char categoria[50];
 } Registro_transf;
 
 int main() {
@@ -60,41 +61,42 @@ int main() {
                     printf("Limite de registros atingido.\n");
                 }
 
-                printf("Insira o seu Bugted: ");
+                printf("Insira o seu Budget: ");
                 scanf("%f", &verba);
                 printf("Verba Registrada: %.2f\n", verba);
                 break;
 
             case 2:
                 if (totalRegistros_transf < MAX_REGISTROS_TRANSF) {
-                    do {
                         printf("Insira o mês (1-12): ");
                         scanf("%d", &registros_transf[totalRegistros_transf].mes);
                         if (registros_transf[totalRegistros_transf].mes < 1 || registros_transf[totalRegistros_transf].mes > 12) {
                             printf("Mês inválido! O valor deve estar entre 1 e 12.\n");
                         }
-                    } while (registros_transf[totalRegistros_transf].mes < 1 || registros_transf[totalRegistros_transf].mes > 12);
-
-                    do {
                         printf("Insira o ano (1-9999): ");
                         scanf("%d", &registros_transf[totalRegistros_transf].ano);
                         if (registros_transf[totalRegistros_transf].ano < 1 || registros_transf[totalRegistros_transf].ano > 9999) {
                             printf("Ano inválido! O valor deve estar entre 1 e 9999.\n");
-                        }
-                    } while (registros_transf[totalRegistros_transf].ano < 1 || registros_transf[totalRegistros_transf].ano > 9999);
+                        } 
 
-                    printf("Insira o valor de Transação desejado: ");
-                    scanf("%f", &registros_transf[totalRegistros_transf].transf);
-                    while (registros_transf[totalRegistros_transf].transf <= 0) {
+                    float valor;
+                    printf("Insira o valor da Transação: ");
+                    while (scanf("%f", &valor) != 1 || valor <= 0) {
                         printf("O valor precisa ser maior que 0: ");
-                        scanf("%f", &registros_transf[totalRegistros_transf].transf);
+                        while (getchar() != '\n'); // Limpa o buffer para evitar loop infinito
                     }
+                    registros_transf[totalRegistros_transf].transf = valor;
+
+                    printf("Insira a categoria da transação: ");
+                    while (getchar() != '\n'); // Limpa qualquer resíduo no buffer antes da leitura
+                    scanf("%s", &registros_transf[totalRegistros_transf].categoria);
 
                     printf("Transação Registrada: %.2f\n", registros_transf[totalRegistros_transf].transf);
-                    printf("Registro concluído: %02d/%04d - Valor: R$ %.2f\n",
+                    printf("Registro concluído: %02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
                            registros_transf[totalRegistros_transf].mes,
                            registros_transf[totalRegistros_transf].ano,
-                           registros_transf[totalRegistros_transf].transf);
+                           registros_transf[totalRegistros_transf].transf,
+                           registros_transf[totalRegistros_transf].categoria);
 
                     totalRegistros_transf++;
                 } else {
@@ -102,7 +104,22 @@ int main() {
                 }
                 break;
 
-            case 0:
+            case 3:
+                if (totalRegistros_transf == 0) {
+                    printf("Nenhuma transação registrada.\n");
+                } else {
+                    printf("\n--- Transações Registradas ---\n");
+                    for (int i = 0; i < totalRegistros_transf; i++) {
+                        printf("%02d/%04d - Valor: R$ %.2f - Categoria: %c\n",
+                               registros_transf[i].mes,
+                               registros_transf[i].ano,
+                               registros_transf[i].transf,
+                               registros_transf[i].categoria);
+                    }
+                }
+                break;
+
+            case 4:
                 printf("Programa encerrado.\n");
                 break;
 
@@ -110,7 +127,7 @@ int main() {
                 printf("Opção inválida! Tente novamente.\n");
                 break;
         }
-    } while (escolha != 0);
+    } while (escolha != 4);
 
     return 0;
 }
