@@ -79,16 +79,18 @@ int main() {
                             printf("Ano inválido! O valor deve estar entre 1 e 9999.\n");
                         } 
 
-                    float valor;
+                   
                     printf("Insira o valor da Transação: ");
-                    while (scanf("%f", &valor) != 1 || valor <= 0) {
+                    scanf("%f", &registros_transf[totalRegistros_transf].transf);
+                    while (&registros_transf[totalRegistros_transf].transf <= 0) {
                         printf("O valor precisa ser maior que 0: ");
+                        scanf("%f", &registros_transf[totalRegistros_transf].transf);
                         while (getchar() != '\n'); // Limpa o buffer para evitar loop infinito
                     }
-                    registros_transf[totalRegistros_transf].transf = valor;
+
 
                     printf("Insira a categoria da transação: ");
-                    while (getchar() != '\n'); // Limpa qualquer resíduo no buffer antes da leitura
+                    //while (getchar() != '\n'); // Limpa qualquer resíduo no buffer antes da leitura
                     scanf("%s", &registros_transf[totalRegistros_transf].categoria);
 
                     printf("Transação Registrada: %.2f\n", registros_transf[totalRegistros_transf].transf);
