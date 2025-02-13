@@ -2,6 +2,10 @@
 #define MAX_REGISTROS 100
 #define MAX_REGISTROS_TRANSF 100
 
+
+char escolha_filtro = 's';
+char escolha_categoria[50];
+
 typedef struct {
     int mes;
     int ano;
@@ -75,8 +79,9 @@ int main() {
                         }
                         printf("Insira o ano (1-9999): ");
                         scanf("%d", &registros_transf[totalRegistros_transf].ano);
-                        if (registros_transf[totalRegistros_transf].ano < 1 || registros_transf[totalRegistros_transf].ano > 9999) {
+                        while (registros_transf[totalRegistros_transf].ano < 1 || registros_transf[totalRegistros_transf].ano > 9999) {
                             printf("Ano inválido! O valor deve estar entre 1 e 9999.\n");
+                            scanf("%d", &registros_transf[totalRegistros_transf].ano);
                         } 
 
                    
@@ -110,14 +115,33 @@ int main() {
                 if (totalRegistros_transf == 0) {
                     printf("Nenhuma transação registrada.\n");
                 } else {
-                    printf("\n--- Transações Registradas ---\n");
-                    for (int i = 0; i < totalRegistros_transf; i++) {
-                        printf("%02d/%04d - Valor: R$ %.2f - Categoria: %c\n",
+                    printf("Quer filtrar por categoria? Se sim aperte s: ");
+                    getchar(); // Consome o '\n' restante do scanf anterior
+                    scanf("%c", &escolha_filtro);       
+                    if (escolha_filtro == 's') {
+                        printf("Qual é a categoria?");
+                        getchar(); // Consome o '\n' restante do scanf anterior
+                        scanf("%c", &escolha_categoria); 
+                        printf(escolha_categoria);
+                        for (int i = 0; i < totalRegistros_transf; i++) {
+                             printf("%02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
+                               registros_transf[i].mes,
+                               registros_transf[i].ano,
+                               registros_transf[i].transf,
+                               registros_transf[i].categoria);
+                               }
+                               
+                    }else{
+                             printf("\n--- Transações Registradas ---\n");
+                             for (int i = 0; i < totalRegistros_transf; i++) {
+                             printf("%02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
                                registros_transf[i].mes,
                                registros_transf[i].ano,
                                registros_transf[i].transf,
                                registros_transf[i].categoria);
                     }
+                    }
+                    
                 }
                 break;
 
