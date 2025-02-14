@@ -111,40 +111,46 @@ int main() {
                 }
                 break;
 
-            case 3:
-                if (totalRegistros_transf == 0) {
-                    printf("Nenhuma transação registrada.\n");
-                } else {
-                    printf("Quer filtrar por categoria? Se sim aperte s: ");
-                    getchar(); // Consome o '\n' restante do scanf anterior
-                    scanf("%c", &escolha_filtro);       
-                    if (escolha_filtro == 's') {
-                        printf("Qual é a categoria?");
-                        getchar(); // Consome o '\n' restante do scanf anterior
-                        scanf("%c", &escolha_categoria); 
-                        printf(escolha_categoria);
-                        for (int i = 0; i < totalRegistros_transf; i++) {
-                             printf("%02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
-                               registros_transf[i].mes,
-                               registros_transf[i].ano,
-                               registros_transf[i].transf,
-                               registros_transf[i].categoria);
-                               }
-                               
-                    }else{
-                             printf("\n--- Transações Registradas ---\n");
-                             for (int i = 0; i < totalRegistros_transf; i++) {
-                             printf("%02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
-                               registros_transf[i].mes,
-                               registros_transf[i].ano,
-                               registros_transf[i].transf,
-                               registros_transf[i].categoria);
-                    }
-                    }
-                    
-                }
-                break;
+           case 3:
+    if (totalRegistros_transf == 0) {
+        printf("Nenhuma transação registrada.\n");
+    } else {
+        printf("Quer filtrar por categoria? Se sim aperte 's': ");
+        getchar(); // Consome o '\n' restante do scanf anterior
+        scanf("%c", &escolha_filtro);
 
+        if (escolha_filtro == 's') {
+            printf("Qual é a categoria? ");
+            scanf("%49s", escolha_categoria);
+
+            printf("\n--- Transações na Categoria '%s' ---\n", escolha_categoria);
+            int encontrou = 0;
+            for (int i = 0; i < totalRegistros_transf; i++) {
+                // strcmp é utilizado para comparar strings
+                if (strcmp(escolha_categoria, registros_transf[i].categoria) == 0) {
+                    printf("%02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
+                           registros_transf[i].mes,
+                           registros_transf[i].ano,
+                           registros_transf[i].transf,
+                           registros_transf[i].categoria);
+                    encontrou = 1;
+                }
+            }
+            if (!encontrou) {
+                printf("Nenhuma transação encontrada para essa categoria.\n");
+            }
+        } else {
+            printf("\n--- Todas as Transações Registradas ---\n");
+            for (int i = 0; i < totalRegistros_transf; i++) {
+                printf("%02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
+                       registros_transf[i].mes,
+                       registros_transf[i].ano,
+                       registros_transf[i].transf,
+                       registros_transf[i].categoria);
+            }
+        }
+    }
+    break;
             case 4:
                 printf("Programa encerrado.\n");
                 break;
