@@ -1,10 +1,18 @@
 #include <stdio.h>
+#include <string.h>
 #define MAX_REGISTROS 100
 #define MAX_REGISTROS_TRANSF 100
 
-
 char escolha_filtro = 's';
+char escolha_filtro_periodo = 'n';
 char escolha_categoria[50];
+
+typedef struct {
+    int mes_periodo_inicial;
+    int ano_periodo_inicial;
+    int mes_periodo_final;
+    int ano_periodo_final;
+} periodo_filtro_inicial;
 
 typedef struct {
     int mes;
@@ -20,6 +28,7 @@ typedef struct {
 
 int main() {
     Registro registros[MAX_REGISTROS];
+    periodo_filtro_inicial periodo;
     Registro_transf registros_transf[MAX_REGISTROS_TRANSF];
     int totalRegistros = 0;
     int totalRegistros_transf = 0;
@@ -28,14 +37,12 @@ int main() {
 
     do {
         printf("Bem - Vindo ao BeyondPay\n");
-        printf("Sua aplicação para registro de transações\n");
         printf("+--------------------------------------------+\n");
-        printf("|  Registre ou confira suas transações aqui! |\n");
-        printf("+--------------------------------------------+\n");
-        printf("|    1. Registrar Verba                      |\n");
-        printf("|    2. Registrar transações                 |\n");
-        printf("|    3. Ver Transações                       |\n");
-        printf("|    4. Sair                                 |\n");
+        printf("|  1. Registrar Verba                      |\n");
+        printf("|  2. Registrar transações                 |\n");
+        printf("|  3. Ver Transações                       |\n");
+        printf("|  4. Calcular Saldo                       |\n");
+        printf("|  5. Sair                                 |\n");
         printf("+--------------------------------------------+\n");
         printf("Escolha sua opção: ");
         scanf("%d", &escolha);
@@ -43,28 +50,13 @@ int main() {
         switch (escolha) {
             case 1:
                 if (totalRegistros < MAX_REGISTROS) {
-                    do {
-                        printf("Insira o mês (1-12): ");
-                        scanf("%d", &registros[totalRegistros].mes);
-                        if (registros[totalRegistros].mes < 1 || registros[totalRegistros].mes > 12) {
-                            printf("Mês inválido! O valor deve estar entre 1 e 12.\n");
-                        }
-                    } while (registros[totalRegistros].mes < 1 || registros[totalRegistros].mes > 12);
-
-                    do {
-                        printf("Insira o ano (1-9999): ");
-                        scanf("%d", &registros[totalRegistros].ano);
-                        if (registros[totalRegistros].ano < 1 || registros[totalRegistros].ano > 9999) {
-                            printf("Ano inválido! O valor deve estar entre 1 e 9999.\n");
-                        }
-                    } while (registros[totalRegistros].ano < 1 || registros[totalRegistros].ano > 9999);
-
+                    printf("Insira o mês (1-12): ");
+                    scanf("%d", &registros[totalRegistros].mes);
+                    printf("Insira o ano (1-9999): ");
+                    scanf("%d", &registros[totalRegistros].ano);
                     totalRegistros++;
                     printf("Registro concluído: %02d/%04d\n", registros[totalRegistros - 1].mes, registros[totalRegistros - 1].ano);
-                } else {
-                    printf("Limite de registros atingido.\n");
                 }
-
                 printf("Insira o seu Budget: ");
                 scanf("%f", &verba);
                 printf("Verba Registrada: %.2f\n", verba);
@@ -72,94 +64,93 @@ int main() {
 
             case 2:
                 if (totalRegistros_transf < MAX_REGISTROS_TRANSF) {
-                        printf("Insira o mês (1-12): ");
-                        scanf("%d", &registros_transf[totalRegistros_transf].mes);
-                        if (registros_transf[totalRegistros_transf].mes < 1 || registros_transf[totalRegistros_transf].mes > 12) {
-                            printf("Mês inválido! O valor deve estar entre 1 e 12.\n");
-                        }
-                        printf("Insira o ano (1-9999): ");
-                        scanf("%d", &registros_transf[totalRegistros_transf].ano);
-                        while (registros_transf[totalRegistros_transf].ano < 1 || registros_transf[totalRegistros_transf].ano > 9999) {
-                            printf("Ano inválido! O valor deve estar entre 1 e 9999.\n");
-                            scanf("%d", &registros_transf[totalRegistros_transf].ano);
-                        } 
-
-                   
+                    printf("Insira o mês (1-12): ");
+                    scanf("%d", &registros_transf[totalRegistros_transf].mes);
+                    printf("Insira o ano (1-9999): ");
+                    scanf("%d", &registros_transf[totalRegistros_transf].ano);
                     printf("Insira o valor da Transação: ");
                     scanf("%f", &registros_transf[totalRegistros_transf].transf);
-                    while (&registros_transf[totalRegistros_transf].transf <= 0) {
-                        printf("O valor precisa ser maior que 0: ");
-                        scanf("%f", &registros_transf[totalRegistros_transf].transf);
-                        while (getchar() != '\n'); // Limpa o buffer para evitar loop infinito
-                    }
-
-
                     printf("Insira a categoria da transação: ");
-                    //while (getchar() != '\n'); // Limpa qualquer resíduo no buffer antes da leitura
-                    scanf("%s", &registros_transf[totalRegistros_transf].categoria);
-
-                    printf("Transação Registrada: %.2f\n", registros_transf[totalRegistros_transf].transf);
-                    printf("Registro concluído: %02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
-                           registros_transf[totalRegistros_transf].mes,
-                           registros_transf[totalRegistros_transf].ano,
-                           registros_transf[totalRegistros_transf].transf,
-                           registros_transf[totalRegistros_transf].categoria);
-
+                    scanf("%s", registros_transf[totalRegistros_transf].categoria);
                     totalRegistros_transf++;
-                } else {
-                    printf("Limite de registros atingido.\n");
                 }
                 break;
 
-           case 3:
-    if (totalRegistros_transf == 0) {
-        printf("Nenhuma transação registrada.\n");
-    } else {
-        printf("Quer filtrar por categoria? Se sim aperte 's': ");
-        getchar(); // Consome o '\n' restante do scanf anterior
-        scanf("%c", &escolha_filtro);
+            case 3:
+                if (totalRegistros_transf == 0) {
+                    printf("Nenhuma transação registrada.\n");
+                } else {
+                    printf("Quer filtrar por categoria? (s/n): ");
+                    getchar();
+                    scanf("%c", &escolha_filtro);
 
-        if (escolha_filtro == 's') {
-            printf("Qual é a categoria? ");
-            scanf("%49s", escolha_categoria);
+                    if (escolha_filtro == 's') {
+                        printf("Qual é a categoria? ");
+                        scanf("%49s", escolha_categoria);
+                        for (int i = 0; i < totalRegistros_transf; i++) {
+                            if (strcmp(escolha_categoria, registros_transf[i].categoria) == 0) {
+                                printf("%02d/%04d - R$ %.2f - Categoria: %s\n", registros_transf[i].mes, registros_transf[i].ano, registros_transf[i].transf, registros_transf[i].categoria);
+                            }
+                        }
+                    } else {
+                        printf("Quer filtrar por período? (s/n): ");
+                        getchar();
+                        scanf("%c", &escolha_filtro_periodo);
 
-            printf("\n--- Transações na Categoria '%s' ---\n", escolha_categoria);
-            int encontrou = 0;
-            for (int i = 0; i < totalRegistros_transf; i++) {
-                // strcmp é utilizado para comparar strings
-                if (strcmp(escolha_categoria, registros_transf[i].categoria) == 0) {
-                    printf("%02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
-                           registros_transf[i].mes,
-                           registros_transf[i].ano,
-                           registros_transf[i].transf,
-                           registros_transf[i].categoria);
-                    encontrou = 1;
+                        if (escolha_filtro_periodo == 's') {
+                            printf("Insira o mês inicial (1-12): ");
+                            scanf("%d", &periodo.mes_periodo_inicial);
+                            printf("Insira o ano inicial (1-9999): ");
+                            scanf("%d", &periodo.ano_periodo_inicial);
+                            printf("Insira o mês final (1-12): ");
+                            scanf("%d", &periodo.mes_periodo_final);
+                            printf("Insira o ano final (1-9999): ");
+                            scanf("%d", &periodo.ano_periodo_final);
+
+                            if ((periodo.ano_periodo_inicial > periodo.ano_periodo_final) || 
+                                (periodo.ano_periodo_inicial == periodo.ano_periodo_final && 
+                                 periodo.mes_periodo_inicial > periodo.mes_periodo_final)) {
+                                printf("Erro: O período inicial não pode ser depois do período final!\n");
+                            } else {
+                                printf("\nResultados dentro do período %02d/%d até %02d/%d:\n", 
+                                       periodo.mes_periodo_inicial, periodo.ano_periodo_inicial, 
+                                       periodo.mes_periodo_final, periodo.ano_periodo_final);
+                                       for (int i = 0; i < totalRegistros_transf; i++) 
+                                        // Verificação se a transação está dentro do período
+                                        if ((registros_transf[i].ano > periodo.ano_periodo_inicial || 
+                                             (registros_transf[i].ano == periodo.ano_periodo_inicial && 
+                                              registros_transf[i].mes >= periodo.mes_periodo_inicial)) && 
+                                            (registros_transf[i].ano < periodo.ano_periodo_final || 
+                                             (registros_transf[i].ano == periodo.ano_periodo_final && 
+                                              registros_transf[i].mes <= periodo.mes_periodo_final))) {
+                                            printf("%02d/%04d - R$ %.2f - Categoria: %s\n", 
+                                                   registros_transf[i].mes, registros_transf[i].ano, 
+                                                   registros_transf[i].transf, registros_transf[i].categoria);
+                                        }
+
+                            }
+                            
+                        }
+                    }
                 }
+                break;
+
+            case 4: {
+                float saldo = 0;
+                for (int i = 0; i < totalRegistros_transf; i++) {
+                    saldo += registros_transf[i].transf;
+                }
+                printf("Saldo total das transações: R$ %.2f\n", saldo);
+                break;
             }
-            if (!encontrou) {
-                printf("Nenhuma transação encontrada para essa categoria.\n");
-            }
-        } else {
-            printf("\n--- Todas as Transações Registradas ---\n");
-            for (int i = 0; i < totalRegistros_transf; i++) {
-                printf("%02d/%04d - Valor: R$ %.2f - Categoria: %s\n",
-                       registros_transf[i].mes,
-                       registros_transf[i].ano,
-                       registros_transf[i].transf,
-                       registros_transf[i].categoria);
-            }
-        }
-    }
-    break;
-            case 4:
+
+            case 5:
                 printf("Programa encerrado.\n");
                 break;
 
             default:
                 printf("Opção inválida! Tente novamente.\n");
-                break;
         }
-    } while (escolha != 4);
-
+    } while (escolha != 5);
     return 0;
 }
