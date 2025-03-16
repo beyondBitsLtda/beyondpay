@@ -1,0 +1,4 @@
+=== Transações Registradas ===
+01/1999 - R$ 3444.00 - Categoria: teste
+
+Saldo Total: R$ -3444.00
