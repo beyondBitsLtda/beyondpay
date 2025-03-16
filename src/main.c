@@ -20,8 +20,9 @@ typedef struct {
     char categoria[50];
 } Registro_transf;
 
+
 void salvar_transacoes(Registro_transf registros[], int total, float saldo) {
-    FILE *arquivo = fopen("transacoes.txt", "w");
+    FILE *arquivo = fopen("transacoes.txt", "a");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo para escrita!\n");
         return;
@@ -37,6 +38,27 @@ void salvar_transacoes(Registro_transf registros[], int total, float saldo) {
     fclose(arquivo);
     printf("Transações salvas com sucesso em 'transacoes.txt'!\n");
 }
+
+void ver_transacoes(const char *transacoes) {
+    FILE *arquivo; // Ponteiro para o arquivo
+    char linha[256]; // Buffer para armazenar uma linha lida
+    arquivo = fopen("transacoes.txt", "r");  // Abrir o arquivo em modo leitura
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para escrita!\n");
+        return;
+    }
+    // Ler o arquivo linha por linha
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        // Imprimir cada linha lida do arquivo
+        printf("%s", linha);
+    }
+     // Fechar o arquivo
+     fclose(arquivo);
+
+}
+
+
 
 int main() {
     Registro registros[MAX_REGISTROS];
@@ -96,18 +118,18 @@ int main() {
                 }
                 break;
 
-            case 3:
-                if (totalRegistros_transf == 0) {
-                    printf("Nenhuma transação registrada.\n");
-                } else {
-                    printf("=== Transações Registradas ===\n");
-                    for (int i = 0; i < totalRegistros_transf; i++) {
-                        printf("%02d/%04d - R$ %.2f - Categoria: %s\n", 
-                               registros_transf[i].mes, registros_transf[i].ano, 
-                               registros_transf[i].transf, registros_transf[i].categoria);
-                    }
+            case 3: {
+
+            
+               
+                  // Chama a função para ler o arquivo no meio do código
+                  ver_transacoes("transacoes.txt");
+           
+               
+                               
+                    
                 }
-                break;
+            
 
             case 4: {
                 float saldo = verba;
