@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <windows.h> // Para a função Sleep()
 
 #define MAX_REGISTROS 100
 #define MAX_REGISTROS_TRANSF 100
@@ -68,6 +70,7 @@ int main() {
     int totalRegistros_transf = 0;
     int escolha;
     float verba = 0.0;
+    float verba_digitada = 0.0;
 
     do {
         printf("Bem - Vindo ao BeyondPay\n");
@@ -75,27 +78,32 @@ int main() {
         printf("|  1. Registrar Verba                      |\n");
         printf("|  2. Registrar Transações                 |\n");
         printf("|  3. Ver Transações                       |\n");
-        printf("|  4. Calcular e Salvar Saldo              |\n");
-        printf("|  5. Sair                                 |\n");
+        printf("|  4. Sair                                 |\n");
+        printf("|                                          |\n");
         printf("+--------------------------------------------+\n");
         printf("Escolha sua opção: ");
         scanf("%d", &escolha);
 
         switch (escolha) {
             case 1:
+    
                 if (totalRegistros < MAX_REGISTROS) {
                     printf("Insira o mês (1-12): ");
                     scanf("%d", &registros[totalRegistros].mes);
                     printf("Insira o ano (1-9999): ");
                     scanf("%d", &registros[totalRegistros].ano);
                     printf("Insira o seu Budget: ");
-                    scanf("%f", &verba);
+                    scanf("%f", &verba_digitada);
+                    verba = verba + verba_digitada;
                     printf("Verba Registrada: %.2f\n", verba);
                     totalRegistros++;
+                    Sleep(3000); // Pausa por 3000 milissegundos (3 segundos)
+                    system("cls");
                 }
                 break;
 
             case 2:
+          
                 if (totalRegistros_transf < MAX_REGISTROS_TRANSF) {
                     printf("Insira o mês (1-12): ");
                     scanf("%d", &registros_transf[totalRegistros_transf].mes);
@@ -106,6 +114,8 @@ int main() {
                     printf("Insira a categoria da transação: ");
                     scanf("%s", registros_transf[totalRegistros_transf].categoria);
                     totalRegistros_transf++;
+                    Sleep(3000); // Pausa por 3000 milissegundos (3 segundos)
+                    system("cls");
 
                     // Calcular saldo atualizado
                     float saldo = verba;
@@ -129,27 +139,16 @@ int main() {
                                
                     
                 }
-            
 
-            case 4: {
-                float saldo = verba;
-                for (int i = 0; i < totalRegistros_transf; i++) {
-                    saldo -= registros_transf[i].transf;
-                }
-
-                printf("Saldo Total: R$ %.2f\n", saldo);
-                salvar_transacoes(registros_transf, totalRegistros_transf, saldo);
-                break;
-            }
-
-            case 5:
+            case 4:
                 printf("Programa encerrado.\n");
-                break;
+                abort();
 
             default:
                 printf("Opção inválida! Tente novamente.\n");
+                
         }
-    } while (escolha != 5);
+    } while (escolha != 4);
 
     return 0;
 }
