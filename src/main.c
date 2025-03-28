@@ -9,6 +9,7 @@
 char escolha_filtro = 's';
 char escolha_filtro_periodo = 'n';
 char escolha_categoria[50];
+char inicio;
 
 typedef struct {
     int mes;
@@ -63,6 +64,30 @@ void ver_transacoes(const char *transacoes) {
 
 
 int main() {
+        Sleep(2000); // Pausa por 3000 milissegundos (3 segundos)
+        printf("######   ######   #     #   #####    #     #  ######   ######      #    #     #  \n");
+        printf("#     #  #        #     #  #     #   ##    #  #     #  #      #  #   #  #     #  \n");
+        printf("#     #  #         #   #   #     #   # #   #  #     #  #      # #     #  #   #   \n");
+        printf("######   ####       # #    #     #   #  #  #  #     #  ######   #######   ##     \n");
+        printf("#     #  #          #      #     #   #   # #  #     #  #        #     #   #      \n");
+        printf("#     #  #          #      #     #   #    ##  #     #  #        #     #   #      \n");
+        printf("######   ######     #       #####    #     #  ######   #        #     #   #      \n");
+        Sleep(3000); // Pausa por 3000 milissegundos (3 segundos)
+        printf("                 \n");
+        printf("                 \n");
+        printf("By Beyond Bits - A Beyond é o Futuro!");
+        printf("                 \n");
+        printf("                 \n");
+        printf("Pressione qualquer tecla para continuar...\n");
+        getchar(); // Aguarda o usuário pressionar Enter
+        Sleep(3000); // Pausa por 3000 milissegundos (3 segundos)
+        system("cls");
+        
+
+
+
+    
+
     Registro registros[MAX_REGISTROS];
     Registro_transf registros_transf[MAX_REGISTROS_TRANSF];
 
@@ -75,11 +100,11 @@ int main() {
     do {
         printf("Bem - Vindo ao BeyondPay\n");
         printf("+--------------------------------------------+\n");
-        printf("|  1. Registrar Verba                      |\n");
-        printf("|  2. Registrar Transações                 |\n");
-        printf("|  3. Ver Transações                       |\n");
-        printf("|  4. Sair                                 |\n");
-        printf("|                                          |\n");
+        printf("|  1. Registrar Verba                        |\n");
+        printf("|  2. Registrar Transações                  |\n");
+        printf("|  3. Ver Transações e Saldo                |\n");
+        printf("|  4. Sair                                   |\n");
+        printf("|                                            |\n");
         printf("+--------------------------------------------+\n");
         printf("Escolha sua opção: ");
         scanf("%d", &escolha);
@@ -97,7 +122,7 @@ int main() {
                     verba = verba + verba_digitada;
                     printf("Verba Registrada: %.2f\n", verba);
                     totalRegistros++;
-                    Sleep(3000); // Pausa por 3000 milissegundos (3 segundos)
+                    Sleep(2000); // Pausa por 3000 milissegundos (3 segundos)
                     system("cls");
                 }
                 break;
@@ -114,7 +139,7 @@ int main() {
                     printf("Insira a categoria da transação: ");
                     scanf("%s", registros_transf[totalRegistros_transf].categoria);
                     totalRegistros_transf++;
-                    Sleep(3000); // Pausa por 3000 milissegundos (3 segundos)
+                    Sleep(2000); // Pausa por 3000 milissegundos (3 segundos)
                     system("cls");
 
                     // Calcular saldo atualizado
@@ -134,6 +159,8 @@ int main() {
                
                   // Chama a função para ler o arquivo no meio do código
                   ver_transacoes("transacoes.txt");
+                  printf("Pressione qualquer tecla para continuar...\n");
+                  getchar(); // Aguarda o usuário pressionar Enter
            
                
                                

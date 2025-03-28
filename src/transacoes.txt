@@ -1,0 +1,4 @@
+=== Transações Registradas ===
+12/2022 - R$ 100.00 - Categoria: TESTE
+
+Saldo Total: R$ 400.00
