@@ -1,4 +1,4 @@
 === Transações Registradas ===
-12/2022 - R$ 100.00 - Categoria: TESTE
+1641676249/0000 - R$ 333,00 - Categoria: ts
 
-Saldo Total: R$ 400.00
+Saldo Total: R$ 67,00
