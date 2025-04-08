@@ -26,8 +26,9 @@ typedef struct {
 } Registro_transf;
 
 
+
 void salvar_transacoes(Registro_transf registros[], int total, float saldo) {
-    FILE *arquivo = fopen("transacoes.txt", "a");
+    FILE *arquivo = fopen("transacoes.txt", "w");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo para escrita!\n");
         return;
@@ -35,32 +36,39 @@ void salvar_transacoes(Registro_transf registros[], int total, float saldo) {
 
     fprintf(arquivo, "=== Transações Registradas ===\n");
     for (int i = 0; i < total; i++) {
-        fprintf(arquivo, "%02d/%04d - R$ %.2f - Categoria: %s\n");
+        // Verifica se os valores estão corretos antes de gravar
+        printf("Salvando: Mes=%d, Ano=%d, Valor=%.2f, Categoria=%s\n",
+               registros[i].mes, registros[i].ano, registros[i].transf, registros[i].categoria);
+
+        fprintf(arquivo, "%02d/%04d - R$ %.2f - Categoria: %s\n",
+                registros[i].mes, registros[i].ano, registros[i].transf, registros[i].categoria);
     }
 
     fprintf(arquivo, "\nSaldo Total: R$ %.2f\n", saldo);
     fclose(arquivo);
-    printf("Transações salvas com sucesso em 'transacoes.txt'!\n");
+    printf("Transações salvas com sucesso!\n");
 }
 
-void ver_transacoes(const char *transacoes) {
-    FILE *arquivo; // Ponteiro para o arquivo
-    char linha[256]; // Buffer para armazenar uma linha lida
-    arquivo = fopen("transacoes.txt", "r");  // Abrir o arquivo em modo leitura
+
+
+void ver_transacoes(const char *nomeArquivo) {
+    FILE *arquivo = fopen(nomeArquivo, "r");  // Abrir o arquivo em modo leitura
+    char linha[256];  // Buffer para armazenar uma linha lida
 
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo para escrita!\n");
+        printf("Erro ao abrir o arquivo para leitura!\n");
         return;
     }
-    // Ler o arquivo linha por linha
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        // Imprimir cada linha lida do arquivo
-        printf("%s", linha);
-    }
-     // Fechar o arquivo
-     fclose(arquivo);
 
+    printf("\n=== Histórico de Transações ===\n");
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        printf("%s", linha);  // Imprime cada linha do arquivo
+    }
+
+    fclose(arquivo);
 }
+
+
 
 
 
@@ -83,8 +91,6 @@ int main() {
         printf("By Beyond Bits - A Beyond é o Futuro!");
         printf("                 \n");
         printf("                 \n");
-        printf("Pressione qualquer tecla para continuar...\n");
-        getchar(); // Aguarda o usuário pressionar Enter
         Sleep(3000); // Pausa por 3000 milissegundos (3 segundos)
         system("cls");
 
@@ -112,7 +118,12 @@ int main() {
         printf("|                                            |\n");
         printf("+--------------------------------------------+\n");
         printf("Escolha sua opção: ");
-        scanf("%d", &escolha);
+        int choice;
+        choice = scanf("%d", &escolha);
+        if (choice != 1) {
+            printf("Valor inválido! Por favor, insira um número inteiro para o mês.\n");
+            while (getchar() != '\n');  // Limpa o buffer do teclado para evitar loop infinito
+            } 
 
          switch (escolha) {
             case 1:
@@ -236,37 +247,39 @@ int main() {
                 }
                 } while (isValor != 1 || valor <= 0);
 
-                registros_transf[totalRegistros_transf].transf = valor;
+            printf("Insira a categoria da transação: ");
+            char categoria[50];
+            scanf("%s", categoria);
 
-                printf("Insira a categoria da transação: ");
-                scanf("%s", registros_transf[totalRegistros_transf].categoria);
+            // Agora salva todos os dados no struct
+            registros_transf[totalRegistros_transf].mes = mes;
+            registros_transf[totalRegistros_transf].ano = ano;
+            registros_transf[totalRegistros_transf].transf = valor;
+            strcpy(registros_transf[totalRegistros_transf].categoria, categoria);
 
-                totalRegistros_transf++;
-                Sleep(2000); // Pausa de 2 segundos
-                system("cls");
+            totalRegistros_transf++;
+            Sleep(2000);
+            system("cls");
 
-                // Calcular saldo atualizado
-                float saldo = verba;
-                    for (int i = 0; i < totalRegistros_transf; i++) {
-                    saldo -= registros_transf[i].transf;
-                }
+            // Calcular saldo atualizado
+            float saldo = verba;
+            for (int i = 0; i < totalRegistros_transf; i++) {
+            saldo -= registros_transf[i].transf;
+            }
 
-                    // Salvar após cada transação
-                    salvar_transacoes(registros_transf, totalRegistros_transf, saldo);
+            // Salvar no arquivo
+            salvar_transacoes(registros_transf, totalRegistros_transf, saldo);
+
                 }
                 break;
 
             case 3: {
 
-
-
                   // Chama a função para ler o arquivo no meio do código
                   ver_transacoes("transacoes.txt");
                   printf("Pressione qualquer tecla para continuar...\n");
                   getchar(); // Aguarda o usuário pressionar Enter
-
-
-
+                  break;
 
                 }
 
