@@ -1,3 +1,8 @@
+<p align="center">
+ <img width="1000" src="https://github.com/beyondBitsLtda/beyondpay/blob/main/logo.jpg" alt="icon"/>
+</p>
+
+
 # Projeto BeyondPay
 
 ## Descrição
@@ -33,22 +38,13 @@ Este projeto consiste no desenvolvimento de um sistema de gestão financeira com
     - Categoria
 - **Filtros Opcionais:**
   - O sistema deve permitir a aplicação de filtros para a visualização das transações:
-    - Filtro por data
     - Filtro por categoria
-- **Total por Categoria:**
-  - O sistema deve calcular e exibir o total de transações por categoria.
-
 ---
 
 ### 3. Cálculo de Saldo
 **Funcionalidades:**
 - **Cálculo do Saldo Atual:**
   - O sistema deve calcular o saldo atual com base nas transações registradas.
-- **Filtros Opcionais:**
-  - O sistema deve permitir a aplicação de filtros para o cálculo do saldo:
-    - Filtro por data
-    - Filtro por categoria
-
 ---
 
 ### 4. Relatórios Simples
@@ -66,34 +62,6 @@ Este projeto consiste no desenvolvimento de um sistema de gestão financeira com
   - O sistema deve permitir salvar todas as transações em um arquivo.
 - **Carregar Transações:**
   - O sistema deve permitir carregar transações de um arquivo salvo anteriormente.
-
----
-
-## Requisitos Não Funcionais
-
-### 1. Interface Gráfica
-- **Descrição:** O sistema deve ter uma interface gráfica amigável e intuitiva.
-- **RNF:** Pesquisar e utilizar uma biblioteca de GUI apropriada (por exemplo, GTK, Qt, etc.).
-
-### 2. Performance
-- **Descrição:** O sistema deve ser capaz de processar e exibir transações rapidamente, mesmo com um grande número de registros.
-- **RNF:** O tempo de resposta para a visualização de transações não deve exceder 2 segundos.
-
-### 3. Segurança
-- **Descrição:** Os dados das transações devem ser armazenados de forma segura.
-- **RNF:** Utilizar métodos de criptografia para proteger os dados armazenados no arquivo.
-
-### 4. Compatibilidade
-- **Descrição:** O sistema deve ser compatível com diferentes sistemas operacionais (Windows, Linux, macOS).
-- **RNF:** O código deve ser portável e utilizar bibliotecas multiplataforma sempre que possível.
-
-### 5. Manutenibilidade
-- **Descrição:** O código do sistema deve ser modular e bem documentado para facilitar a manutenção e futuras expansões.
-- **RNF:** Seguir as melhores práticas de programação e padrões de codificação.
-
-### 6. Usabilidade
-- **Descrição:** O sistema deve ser fácil de usar, com uma curva de aprendizado mínima para novos usuários.
-- **RNF:** Realizar testes de usabilidade com usuários finais para identificar e corrigir problemas de interface.
 
 ---
 
